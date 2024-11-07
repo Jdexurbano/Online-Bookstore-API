@@ -20,8 +20,8 @@ class Book(models.Model):
     user = models.ForeignKey(CustomUser,on_delete = models.SET_NULL, null = True, related_name = 'books')
     author = models.CharField(max_length = 30)
     title = models.CharField(max_length = 50)
-    price = models.IntegerField()
-    quantity = models.IntegerField()
+    price = models.IntegerField(default = 0)
+    quantity = models.IntegerField(default = 0)
 
 
     def __str__(self):
