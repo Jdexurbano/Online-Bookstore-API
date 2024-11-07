@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import IsAuthenticated
 from core.api.serializers import user_serializer
 from core.models import CustomUser
 
@@ -22,6 +23,8 @@ class UserRegistrationView(APIView):
 
 #User detail
 class UserDetailView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(responses = {status.HTTP_200_OK:user_serializer.UserSerializer()})
     def get(self,request):
