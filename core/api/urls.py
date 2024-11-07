@@ -11,4 +11,7 @@ urlpatterns = [
 
     #register
     path('register/',user_views.UserRegistrationView.as_view(),name='register'),
+
+    #user detail
+    path('user/',user_views.UserDetailView.as_view(),name = 'user_detail'),
 ]
