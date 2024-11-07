@@ -13,7 +13,3 @@ class CustomUser(AbstractUser):
     address = models.CharField(max_length = 100)
     contact_number = models.CharField(max_length = 15)
     role = models.CharField(max_length = 10, choices = ROLE_CHOICES, default = 'user')
-
-    def __str__(self):
-        return str(f"{self.first_name} {self.last_name}")
-    
