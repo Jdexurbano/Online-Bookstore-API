@@ -26,3 +26,28 @@ class Book(models.Model):
 
     def __str__(self):
         return str(f"{self.title} {self.author}")
+
+
+#model for order
+class Order(models.Model):
+    
+    #choices for order status
+    STATUS_CHOICES = [
+        ('pending','Pending'),
+        ('completed','Completed'),
+        ('canceled','Canceled'),
+    ]
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name = 'orders')
+    book = models.ManyToManyField(Book,through = 'OrderItem')
+    status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = 'pending')
+
+    def __str__(self):
+        return str(f"{self.user}")
+
+
+#model for order item
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete = models.CASCADE, related_name = 'order_item')
+    book = models.ForeignKey(Book, on_delete = models.CASCADE, related_name = 'book_order_item')
+    quantity = models.IntegerField(default = 0)
