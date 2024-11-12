@@ -1,5 +1,6 @@
 from core.models import OrderItem,CustomUser,Book, Order
 from rest_framework import serializers
+from core.api.serializers import book_serializers
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,3 +24,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
         book.save()
 
         return order_item
+
+class OrderSerializer(serializers.ModelSerializer):
+    book = book_serializers.BookSerializer(many = True)
+    class Meta:
+        model = Order
+        fields = ['id','status','user','book']
