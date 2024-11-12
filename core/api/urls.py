@@ -23,4 +23,9 @@ urlpatterns = [
     #order item
     path('orders/',order_item_views.OrderItemList.as_view(),name = 'order_item_list'),
     path('orders/<int:order_id>/',order_item_views.OrderItemDetailView.as_view(), name = 'order_detail'),
+
+    #for admin
+    path('admin/orders/',order_item_views.OrderListForAdminView.as_view(), name = 'admin_list_order'),
+    path('admin/orders/<int:order_id>/',order_item_views.OrderDetailForAdminView.as_view(), name = 'admin_detail_order'),
+    
 ]
