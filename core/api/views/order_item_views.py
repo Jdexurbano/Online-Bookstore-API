@@ -43,6 +43,17 @@ class OrderItemDetailView(APIView):
         order = self.get_object(order_id)
         serializer = order_item_serializers.OrderSerializer(order)
         return Response(serializer.data, status = status.HTTP_200_OK)
+    
+    @swagger_auto_schema(request_body = order_item_serializers.UpdateOrderStatusSerializer, responses = {status.HTTP_201_CREATED:order_item_serializers.UpdateOrderStatusSerializer()})
+    def patch(self,request,order_id):
+        order = self.get_object(order_id)
+        serializer = order_item_serializers.UpdateOrderStatusSerializer(order, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response({
+            "Message":serializer.errors
+        },status = status.HTTP_400_BAD_REQUEST)
 
 
 #FOR ADMIN VIEWS
@@ -72,14 +83,3 @@ class OrderDetailForAdminView(APIView):
         order = self.get_object(order_id)
         serializer = order_item_serializers.OrderSerializer(order)
         return Response(serializer.data, status = status.HTTP_200_OK)
-    
-    @swagger_auto_schema(request_body = order_item_serializers.UpdateOrderStatusSerializer, responses = {status.HTTP_201_CREATED:order_item_serializers.UpdateOrderStatusSerializer()})
-    def patch(self,request,order_id):
-        order = self.get_object(order_id)
-        serializer = order_item_serializers.UpdateOrderStatusSerializer(order, data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response({
-            "Message":serializer.errors
-        },status = status.HTTP_400_BAD_REQUEST)
