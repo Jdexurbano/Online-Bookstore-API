@@ -51,3 +51,25 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete = models.CASCADE, related_name = 'order_item')
     book = models.ForeignKey(Book, on_delete = models.CASCADE, related_name = 'book_order_item')
     quantity = models.IntegerField(default = 0)
+
+
+#model for cart
+class Cart(models.Model):
+
+    #choices for cart status
+    STATUS_CHOICES = [
+        ('active','Active'),
+        ('checked_out','Checked Out'),
+        ('abandoned','Abandoned')
+    ]
+
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name = 'carts')
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = 'active')
+
+#model for cart item
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart,on_delete = models.CASCADE, related_name = 'cart_items')
+    book = models.ForeignKey(Book, on_delete = models.CASCADE, related_name = 'book_items')
+    quantity = models.PositiveIntegerField(default = 1)
