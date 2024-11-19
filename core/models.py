@@ -20,8 +20,8 @@ class Book(models.Model):
     user = models.ForeignKey(CustomUser,on_delete = models.SET_NULL, null = True, related_name = 'books')
     author = models.CharField(max_length = 30)
     title = models.CharField(max_length = 50)
-    price = models.IntegerField(default = 0)
-    quantity = models.IntegerField(default = 0)
+    price = models.PositiveIntegerField(default = 0)
+    quantity = models.PositiveIntegerField(default = 0)
 
 
     def __str__(self):
@@ -50,7 +50,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete = models.CASCADE, related_name = 'order_item')
     book = models.ForeignKey(Book, on_delete = models.CASCADE, related_name = 'book_order_item')
-    quantity = models.IntegerField(default = 0)
+    quantity = models.PositiveIntegerField(default = 0)
 
 
 #model for cart
@@ -67,6 +67,9 @@ class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = 'active')
+
+    def __str__(self):
+        return str(f"{self.user}")
 
 #model for cart item
 class CartItem(models.Model):
