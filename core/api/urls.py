@@ -1,5 +1,5 @@
 from django.urls import path, include
-from core.api.views import user_views,book_views, order_item_views
+from core.api.views import user_views,book_views, order_item_views,cart_views,cart_item_views
 from rest_framework_simplejwt.views import(TokenRefreshView,TokenObtainPairView)
 
 
@@ -27,5 +27,12 @@ urlpatterns = [
     #for admin
     path('admin/orders/',order_item_views.OrderListForAdminView.as_view(), name = 'admin_list_order'),
     path('admin/orders/<int:order_id>/',order_item_views.OrderDetailForAdminView.as_view(), name = 'admin_detail_order'),
+
+    #for cart
+    path('cart/',cart_views.CartList.as_view(),name = 'cart_list'),
+
+    #for cart item
+    path('cart/items/',cart_item_views.CartItemList.as_view(),name = 'cart_item_list'),
+    path('cart/items/<int:item_id>/',cart_item_views.CartItemDetail.as_view(),name = 'cart_item_detail'),
     
 ]
